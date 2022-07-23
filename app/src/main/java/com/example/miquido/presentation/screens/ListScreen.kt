@@ -4,50 +4,60 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Button
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.miquido.domain.model.Photo
+import com.example.miquido.presentation.navigation.Screen
 import com.example.miquido.ui.theme.SMALL_PADDING
 
 @Composable
 fun ListScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: MainViewModel = hiltViewModel()
 ) {
-    val examplePhoto = Photo(
-        author = "author",
-        id = "201",
-        url = "https://unsplash.com/photos/yC-Yzbqy7PY",
-        download_url = "https://picsum.photos/id/0/5616/3744",
-        width = 5616,
-        height = 3744
-    )
-    val examplePhoto2 = Photo(
-        author = "authorrr",
-        id = "200",
-        url = "https://unsplash.com/photos/yC-Yzbqy7PY",
-        download_url = "https://picsum.photos/id/0/5616/3744",
-        width = 5616,
-        height = 3744
-    )
+    var progressBarState = viewModel.progressBarState
+    val photoList = viewModel.photoList
+    var pageNumber = viewModel.pageNumber
+    val message = viewModel.messageState
 
-    val itemList = listOf(examplePhoto, examplePhoto2)
+    LaunchedEffect(key1 = message) {
 
-    LazyColumn(
-        contentPadding = PaddingValues(all = SMALL_PADDING),
-        verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
-    ) {
-        items(
-            items = itemList,
-            key = { photo ->
-                photo.id
-            }
-        ) { photo ->
+    }
 
-            PhotoItem(url = photo.download_url, id = photo.id) {
+    if(photoList.value.isNotEmpty()) {
+        LazyColumn(
+            contentPadding = PaddingValues(all = SMALL_PADDING),
+            verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
+        ) {
+            items(
+                items = photoList.value,
+                key = { photo ->
+                    photo.id
+                }
+            ) { photo ->
 
+                PhotoItem(
+                    id = photo.id,
+                    onDetailClicked = {
+                        navController.currentBackStackEntry?.savedStateHandle?.set(
+                            key = "photo",
+                            value = photo
+                        )
+                        navController.navigate(Screen.Detail.route)
+                    }
+                )
             }
         }
     }
+
+    Button(onClick = { viewModel.getPhotos(1) }) {
+
+    }
+
+
+
 
 
 }

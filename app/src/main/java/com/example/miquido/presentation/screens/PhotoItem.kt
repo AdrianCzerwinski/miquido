@@ -14,14 +14,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.example.miquido.data.remote.PicsumApi.Companion.BASE_URL
 import com.example.miquido.ui.theme.MEDIUM_PADDING
 
 @Composable
 fun PhotoItem(
-    url: String,
     id: String,
     onDetailClicked: () -> Unit
 ) {
+    val url = "$BASE_URL/$id/400/400"
     Card(
         modifier = Modifier
             .fillMaxWidth()
