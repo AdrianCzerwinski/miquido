@@ -5,8 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.miquido.domain.model.Photo
-import com.example.miquido.presentation.screens.DetailScreen
-import com.example.miquido.presentation.screens.ListScreen
+import com.example.miquido.presentation.screens.detail.DetailScreen
+import com.example.miquido.presentation.screens.list.ListScreen
 
 @Composable
 fun SetupNavGraph(navHostController: NavHostController) {
@@ -17,7 +17,7 @@ fun SetupNavGraph(navHostController: NavHostController) {
         composable(route = Screen.Detail.route){
             val photo =
                 navHostController.previousBackStackEntry?.savedStateHandle?.get<Photo>("photo")
-            DetailScreen(navController = navHostController, photo = photo)
+            DetailScreen(photo = photo)
         }
     }
 

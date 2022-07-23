@@ -7,9 +7,10 @@ import retrofit2.http.Query
 interface PicsumApi {
 
 
-    @GET("v2/list?page=1&limit=20")
+    @GET("v2/list")
     suspend fun getPhotos(
-        @Query("page") query: Int
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
     ):List<Photo>
 
     companion object {

@@ -1,6 +1,5 @@
 package com.example.miquido.data.repository
 
-import android.util.Log
 import com.example.miquido.data.remote.PicsumApi
 import com.example.miquido.domain.model.Photo
 import com.example.miquido.domain.model.Response
@@ -13,10 +12,9 @@ class RepositoryImpl @Inject constructor(
 ): Repository {
 
     override suspend fun getPhotos(page: Int): Response<List<Photo>> {
-        Log.d("PHOTO", "Started in Repository Impl")
         return try {
             Response.Success(
-                data = remote.getPhotos(page)
+                data = remote.getPhotos(page = page, limit = 20)
             )
         } catch (e: Exception) {
             Response.Error(e.message ?: UNKNOWN_ERROR)
