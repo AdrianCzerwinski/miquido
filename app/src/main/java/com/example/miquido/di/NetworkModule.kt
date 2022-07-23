@@ -7,6 +7,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -18,7 +19,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object NetworkModule {
 
     @Provides
     @Singleton
@@ -45,5 +46,6 @@ object AppModule {
     fun providePhotoApi(retrofit: Retrofit): PicsumApi {
         return retrofit.create(PicsumApi::class.java)
     }
+
 
 }
