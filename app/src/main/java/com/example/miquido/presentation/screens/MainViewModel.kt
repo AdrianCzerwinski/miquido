@@ -1,6 +1,5 @@
 package com.example.miquido.presentation.screens
 
-import android.util.Log
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,54 +17,53 @@ class MainViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-    var state by mutableStateOf(ScreenState())
+    var listScreenState by mutableStateOf(ScreenState())
         private set
-    var messageBarState by mutableStateOf(Response.Error(""))
+    var listErrorState by mutableStateOf(Response.Error(""))
         private set
-    var detailMessageBarState by mutableStateOf(Response.Error(""))
+    var detailErrorState by mutableStateOf(Response.Error(""))
         private set
 
     init {
-        getPhotos(1)
+        loadPhotos(1)
     }
 
-    private fun getPhotos(page: Int) {
+    fun loadPhotos(page: Int) {
         viewModelScope.launch {
-            state = if (state.page == 1) {
-                state.copy(progressBarState = true)
+            listScreenState = if (listScreenState.page == 1) {
+                listScreenState.copy(progressBarState = true)
             } else {
-                state.copy(isLoading = true)
+                listScreenState.copy(isLoading = true)
             }
             delay(1000)
             when (val response = repository.getPhotos(page)) {
                 is Response.Success -> {
-                    state = state.copy(
+                    listScreenState = listScreenState.copy(
                         isLoading = false,
                         progressBarState = false,
-                        photos = state.photos + response.data
+                        photos = listScreenState.photos + response.data
                     )
                 }
                 is Response.Error -> {
-                    state = state.copy(
+                    listScreenState = listScreenState.copy(
                         isLoading = false,
                         progressBarState = false,
-                        page = state.page - 1
+                        page = listScreenState.page - 1
                     )
-                    messageBarState = Response.Error(message = response.message)
+                    listErrorState = Response.Error(message = response.message)
                 }
             }
         }
     }
 
-    fun pageUp() {
-        val page = state.page + 1
-        Log.d("PHOTOS", "Next Page: $page")
-        state = state.copy(page = page)
-        getPhotos(page)
+    fun pageUpAndLoadPhotos() {
+        val page = listScreenState.page + 1
+        listScreenState = listScreenState.copy(page = page)
+        loadPhotos(page)
     }
 
-    fun detailError(e: String?) {
-        detailMessageBarState = Response.Error(message = e ?: UNKNOWN_ERROR)
+    fun detailErrorToDetailsScreen(e: String?) {
+        detailErrorState = Response.Error(message = e ?: UNKNOWN_ERROR)
     }
 }
 

@@ -44,7 +44,7 @@ fun DetailScreen(
     val context = LocalContext.current
     var showDetail by remember { mutableStateOf(false) }
     val url = "${PicsumApi.BASE_URL}/id/${photo?.id}/1200"
-    val error = viewModel.detailMessageBarState
+    val error = viewModel.detailErrorState
 
     LaunchedEffect(key1 = error) {
         if (error.message.isNotBlank())
@@ -91,7 +91,7 @@ fun DetailScreen(
                 val painter = rememberAsyncImagePainter(
                     model = url,
                     onError = { error ->
-                        viewModel.detailError(e = error.result.throwable.message)
+                        viewModel.detailErrorToDetailsScreen(e = error.result.throwable.message)
                     }
                 )
 

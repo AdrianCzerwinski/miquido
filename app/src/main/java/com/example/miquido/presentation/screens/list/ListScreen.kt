@@ -32,8 +32,8 @@ fun ListScreen(
     viewModel: MainViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val state = viewModel.state
-    var error = viewModel.messageBarState
+    val state = viewModel.listScreenState
+    var error = viewModel.listErrorState
 
     LaunchedEffect(key1 = error) {
         if (error.message.isNotBlank())
@@ -102,7 +102,7 @@ fun ListScreen(
                         } else {
                             Button(
                                 onClick = {
-                                    viewModel.pageUp()
+                                    viewModel.pageUpAndLoadPhotos()
                                 },
                                 modifier = Modifier.background(Teal200)
                             ) {
