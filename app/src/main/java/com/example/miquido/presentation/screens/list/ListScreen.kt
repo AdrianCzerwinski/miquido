@@ -24,6 +24,7 @@ import com.example.miquido.presentation.screens.MainViewModel
 import com.example.miquido.ui.theme.LARGE_PADDING
 import com.example.miquido.ui.theme.Purple500
 import com.example.miquido.ui.theme.Teal200
+import kotlinx.coroutines.delay
 
 @Composable
 fun ListScreen(
@@ -32,12 +33,13 @@ fun ListScreen(
 ) {
     val context = LocalContext.current
     val state = viewModel.state
+    var error = viewModel.messageBarState
 
-    LaunchedEffect(key1 = state.error) {
-        if (state.error.message.isNotBlank())
+    LaunchedEffect(key1 = error) {
+        if (error.message.isNotBlank())
         Toast.makeText(
             context,
-            state.error.message,
+            error.message,
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -48,12 +50,26 @@ fun ListScreen(
             .background(color = Purple500)
     ) {
         if (state.progressBarState) {
-            CircularProgressIndicator(modifier = Modifier.size(80.dp), color = Teal200)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = Purple500),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                CircularProgressIndicator(modifier = Modifier.size(100.dp), color = Teal200)
+            }
         } else {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
             ) {
                 items(state.photos.size) { i ->
+                    var placeholder by remember { mutableStateOf(false)}
+                    LaunchedEffect(key1 = true){
+                        placeholder = true
+                        delay(500)
+                        placeholder = false
+                    }
                     val photo = state.photos[i]
                     Column(
                         modifier = Modifier
@@ -68,7 +84,8 @@ fun ListScreen(
                                     value = photo
                                 )
                                 navController.navigate(Screen.Detail.route)
-                            }
+                            },
+                            placeholder = placeholder
                         )
                     }
                 }
@@ -81,7 +98,7 @@ fun ListScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         if (state.isLoading) {
-                            CircularProgressIndicator(color = Teal200)
+                            CircularProgressIndicator(color = Purple500)
                         } else {
                             Button(
                                 onClick = {

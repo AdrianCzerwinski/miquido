@@ -17,7 +17,7 @@ fun SetupNavGraph(navHostController: NavHostController) {
         composable(route = Screen.Detail.route){
             val photo =
                 navHostController.previousBackStackEntry?.savedStateHandle?.get<Photo>("photo")
-            DetailScreen(photo = photo)
+            DetailScreen(photo = photo, navController = navHostController)
         }
     }
 

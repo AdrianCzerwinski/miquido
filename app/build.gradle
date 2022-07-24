@@ -92,6 +92,9 @@ dependencies {
 
     // Icons
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
+
+    //Placeholder
+    implementation "com.google.accompanist:accompanist-placeholder:0.23.1"
 }
 kapt {
     correctErrorTypes = true
