@@ -1,9 +1,8 @@
-# miquido
-# Miquido Test
 
-# Main stack and structure:3
+# Miquido Tes- Main stack and structure:
 
-### MVVM, Jetpack Compose, Retrofit, Hilt DI, Clean Architecture, JUnit
+### Stack:
+#### MVVM, Jetpack Compose, Retrofit, Hilt DI, Clean Architecture, JUnit
 
 ### Structure:
 #### data package: Api Interface + Repository Implementation
