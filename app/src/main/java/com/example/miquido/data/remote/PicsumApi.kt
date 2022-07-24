@@ -6,7 +6,6 @@ import retrofit2.http.Query
 
 interface PicsumApi {
 
-
     @GET("v2/list")
     suspend fun getPhotos(
         @Query("page") page: Int,
@@ -16,4 +15,5 @@ interface PicsumApi {
     companion object {
         const val BASE_URL = "https://picsum.photos/"
     }
+
 }

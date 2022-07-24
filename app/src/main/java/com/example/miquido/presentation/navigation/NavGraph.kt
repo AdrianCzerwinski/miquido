@@ -20,5 +20,4 @@ fun SetupNavGraph(navHostController: NavHostController) {
             DetailScreen(photo = photo, navController = navHostController)
         }
     }
-
 }

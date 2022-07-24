@@ -33,15 +33,15 @@ fun ListScreen(
 ) {
     val context = LocalContext.current
     val state = viewModel.listScreenState
-    var error = viewModel.listErrorState
+    val error = viewModel.listErrorState
 
     LaunchedEffect(key1 = error) {
         if (error.message.isNotBlank())
-        Toast.makeText(
-            context,
-            error.message,
-            Toast.LENGTH_SHORT
-        ).show()
+            Toast.makeText(
+                context,
+                error.message,
+                Toast.LENGTH_SHORT
+            ).show()
     }
 
     Surface(
@@ -64,8 +64,8 @@ fun ListScreen(
                 modifier = Modifier.fillMaxSize(),
             ) {
                 items(state.photos.size) { i ->
-                    var placeholder by remember { mutableStateOf(false)}
-                    LaunchedEffect(key1 = true){
+                    var placeholder by remember { mutableStateOf(false) }
+                    LaunchedEffect(key1 = true) {
                         placeholder = true
                         delay(500)
                         placeholder = false

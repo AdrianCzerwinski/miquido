@@ -45,6 +45,4 @@ object NetworkModule {
     fun providePhotoApi(retrofit: Retrofit): PicsumApi {
         return retrofit.create(PicsumApi::class.java)
     }
-
-
 }

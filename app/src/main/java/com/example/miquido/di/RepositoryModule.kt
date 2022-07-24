@@ -21,5 +21,4 @@ abstract class RepositoryModule {
         repositoryImpl: RepositoryImpl
     ): Repository
 
-
 }

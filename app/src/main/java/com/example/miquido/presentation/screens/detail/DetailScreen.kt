@@ -34,7 +34,6 @@ import com.example.miquido.domain.model.Photo
 import com.example.miquido.presentation.screens.MainViewModel
 import com.example.miquido.ui.theme.*
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun DetailScreen(
     photo: Photo?,
@@ -94,7 +93,6 @@ fun DetailScreen(
                         viewModel.detailErrorToDetailsScreen(e = error.result.throwable.message)
                     }
                 )
-
                 Image(
                     painter = painter,
                     contentDescription = "photo",
