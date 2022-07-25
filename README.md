@@ -1,5 +1,5 @@
 
-# Miquido Tes- Main stack and structure:
+# Miquido Test- Main stack and structure:
 
 ### Stack:
 #### MVVM, Jetpack Compose, Retrofit, Hilt DI, Clean Architecture, JUnit
